@@ -64,6 +64,5 @@ typings/
 src/**/*.js
 pythonSrc/__pycache__
 dist/
-ops
 docker-ssh
 
