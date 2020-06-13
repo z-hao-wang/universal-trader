@@ -1,5 +1,9 @@
 ## getting started
 ```
+# install git lfs
+brew install git-lfs
+git lfs install
+
 npm ci
 npm run tsc
 node src/main.js
