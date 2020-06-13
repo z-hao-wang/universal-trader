@@ -33,6 +33,15 @@ const pythonWrapper: StrategyType = {
       key: 'spread',
       value: 1,
     },
+    {
+      key: 'requireCandle',
+      value: {
+        resolution: 300,
+        preloadSeconds: 86400 * 20,
+        pairDb: 'USD_BTC_perpetual_swap',
+        exchange: 'bitmex_fx',
+      },
+    },
   ],
   params: [
     {
@@ -99,6 +108,18 @@ const pythonWrapper: StrategyType = {
     options: TraderUltraTfClass,
   ) => {
     const instructions = options.py.receiveOb(JSON.stringify({ ob, position, orders, options: pickOptions(options) }));
+    const newInstructions = instructions ? JSON.parse(instructions) : [];
+    return dataProcessingUtils.mapInstructions(newInstructions);
+  },
+  onReceiveCandle: (
+    candle: ODSim.CandleSchema,
+    positions: (ODSim.Position | null)[],
+    orders: ExistingOrderResponse[][],
+    options: TraderUltraTfClass,
+  ) => {
+    const instructions = options.py.receiveCandle(
+      JSON.stringify({ candle, positions, orders, options: pickOptions(options) }),
+    );
     const newInstructions = instructions ? JSON.parse(instructions) : [];
     return dataProcessingUtils.mapInstructions(newInstructions);
   },

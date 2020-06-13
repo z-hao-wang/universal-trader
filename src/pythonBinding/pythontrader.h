@@ -16,6 +16,7 @@ class PythonTrader: public Napi::ObjectWrap<PythonTrader> {
   Napi::Value ReceiveTradeMulti(const Napi::CallbackInfo& info);
   Napi::Value ReceiveOb(const Napi::CallbackInfo& info);
   Napi::Value ReceiveObMulti(const Napi::CallbackInfo& info);
+  Napi::Value ReceiveCandle(const Napi::CallbackInfo& info);
   Napi::Value PositionChange(const Napi::CallbackInfo& info);
   Napi::Value Complete(const Napi::CallbackInfo& info);
   Napi::Value Init(const Napi::CallbackInfo& info);

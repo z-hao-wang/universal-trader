@@ -1,21 +1,3 @@
-{
-  "compilerOptions": {
-    "module": "commonjs",
-    "sourceMap": false,
-    "lib": [ "es2015", "dom" ],
-    "noEmitOnError": true,
-    "target": "ES6",
-    "strict": true,
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "baseUrl": "./",
-    "declaration": true,
-    "declarationDir": "./dist",
-    "outDir": "./dist",
-    "paths": {}
-  },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0f952912ec951420ad4be3dc781db69400b909f06463f5d1017854afc9fb99c5
+size 408

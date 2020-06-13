@@ -56,6 +56,8 @@ const ob1 = require('../data/bitmex_fx-USD_BTC_perpetual_swap-ob.json');
 const ob2 = require('../data/binance_fx-USD_BTC_perpetual_swap-ob.json');
 const funding1 = require('../data/bitmex_fx-USD_BTC_perpetual_swap-funding.json');
 const funding2 = require('../data/binance_fx-USD_BTC_perpetual_swap-funding.json');
+const candle1 = require('../data/bitmex_fx-USD_BTC_perpetual_swap-candle.json');
+const candle2 = require('../data/binance_fx-USD_BTC_perpetual_swap-candle.json');
 
 const dualExchange = STRATEGY_NAME === 'pythonSampleDualExchange';
 const hours = 2;
@@ -78,6 +80,7 @@ console.log(`tfflen=${tfArr.length} tf1Len=${tf1.length} obsLen=${obs.length}`);
 const dataExchanges: any = {
   tfArr,
   obs,
+  candles: candle1,
   fundingInfo: funding1,
   fundingInfo2: funding2,
   traderOptions: {

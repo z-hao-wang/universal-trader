@@ -2,7 +2,6 @@ import json
 from datetime import datetime
 
 class Trader:
-
     def __init__(self, initialValue):
         argJson = json.loads(initialValue)
         self.startTime = datetime.timestamp(datetime.now())
@@ -61,6 +60,9 @@ class Trader:
     #               }
     def receiveOb(self, ob, position, orders, options):
         return []
+    def receiveCandle(self, candle, positions, orders, options):
+        # print('candle', candle)
+        return []
 
 traderInstance = Trader("{}")
 def receiveOb(arg):
@@ -74,6 +76,13 @@ def receiveTrade(arg):
     global traderInstance
     ret = traderInstance.receiveTrade(argJson["trade"], argJson.get("position"), argJson["orders"], argJson["options"])
     return json.dumps(ret)
+
+def receiveCandle(arg):
+    argJson = json.loads(arg)
+    global traderInstance
+    ret = traderInstance.receiveCandle(argJson["candle"], argJson.get("positions"), argJson["orders"], argJson["options"])
+    return json.dumps(ret)
+
 def init(arg):
     argJson = json.loads(arg)
     global traderInstance

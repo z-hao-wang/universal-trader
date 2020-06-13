@@ -37,6 +37,7 @@ Napi::Object PythonTrader::Init(Napi::Env env, Napi::Object exports) {
                    InstanceMethod("receiveOb", &PythonTrader::ReceiveOb),
                    InstanceMethod("receiveTradeMulti", &PythonTrader::ReceiveTradeMulti),
                    InstanceMethod("receiveObMulti", &PythonTrader::ReceiveObMulti),
+                   InstanceMethod("receiveCandle", &PythonTrader::ReceiveCandle),
                    InstanceMethod("positionChange", &PythonTrader::PositionChange),
                    InstanceMethod("complete", &PythonTrader::Complete),
                    InstanceMethod("init", &PythonTrader::Init)
@@ -148,6 +149,10 @@ Napi::Value PythonTrader::ReceiveOb(const Napi::CallbackInfo& info) {
 
 Napi::Value PythonTrader::ReceiveObMulti(const Napi::CallbackInfo& info) {
   return this->callFunc(info, (char*)"receiveObMulti");
+}
+
+Napi::Value PythonTrader::ReceiveCandle(const Napi::CallbackInfo& info) {
+  return this->callFunc(info, (char*)"receiveCandle");
 }
 
 Napi::Value PythonTrader::Init(const Napi::CallbackInfo& info) {

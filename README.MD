@@ -31,8 +31,8 @@ bash ops/buildDocker.sh
 Then make any changes in pythonSrc/ and run it again
 
 ```
-bash ops/runpy.sh pythonSampleDualExchange
 bash ops/runpy.sh pythonSample
+bash ops/runpy.sh pythonSampleDualExchange
 ```
 
 To Kill the docker instance, open separate browser tab and run
