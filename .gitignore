@@ -65,4 +65,4 @@ src/**/*.js
 pythonSrc/__pycache__
 dist/
 docker-ssh
-
+data/*.json
