@@ -31,8 +31,9 @@ RUN npm i node-gyp -g
 RUN mkdir -p /root/.ssh/
 RUN chmod 0700 /root/.ssh
 
+RUN echo "StrictHostKeyChecking no" >> /root/.ssh/config
 RUN ssh-keyscan github.com >/root/.ssh/known_hosts
-RUN ssh-keyscan bitbucket.org >/root/.ssh/known_hosts
+#RUN ssh-keyscan bitbucket.org >/root/.ssh/known_hosts
 RUN pip install numpy pandas datetime 
 
 WORKDIR /app
