@@ -40,6 +40,10 @@ WORKDIR /app
 COPY package.json /app/
 COPY package-lock.json /app/
 
+# debug
+RUN docker-ssh-exec ls -al /root/.ssh/
+RUN docker-ssh-exec git clone git@bitbucket.org:whateverhow/simcontractex.git
+RUN docker-ssh-exec git clone git@bitbucket.org:whateverhow/basic-backtest.git
 RUN docker-ssh-exec npm ci
 
 COPY tsconfig.json binding.gyp /app/
