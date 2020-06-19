@@ -31,8 +31,8 @@ RUN npm i node-gyp -g
 RUN mkdir -p /root/.ssh/
 RUN chmod 0700 /root/.ssh
 
-RUN ssh-keyscan github.com >/root/.ssh/known_hosts
-RUN ssh-keyscan bitbucket.org >/root/.ssh/known_hosts
+RUN ssh-keyscan github.com > /root/.ssh/known_hosts
+RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
 RUN pip install numpy pandas datetime 
 
 WORKDIR /app
@@ -41,6 +41,7 @@ COPY package.json /app/
 COPY package-lock.json /app/
 
 # debug
+RUN cat /root/.ssh/known_hosts
 RUN docker-ssh-exec ls -al /root/.ssh/
 RUN docker-ssh-exec git clone git@bitbucket.org:whateverhow/simcontractex.git
 RUN docker-ssh-exec git clone git@bitbucket.org:whateverhow/basic-backtest.git
