@@ -15,7 +15,7 @@ class Trader:
         # spread will be backtested with genetic fitting
         spread = options["spread"]
         if position is None:
-        # all instructions can be viewed at https://bitbucket.org/whateverhow/basic-backtest/src/master/src/types/instruction.ts
+        # all instructions can be viewed at https://github.com/z-hao-wang/universal-trader/blob/master/src/instructions.type.ts
             return [{
                 "op": "cancelAllOrders"
             }, {
