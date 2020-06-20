@@ -1,11 +1,11 @@
 import { evaluateProfit } from 'basic-backtest';
-
+const basePath = '../../../../dist/strategies';
 const data: any = {
-  tfArr: require('../data/trades.json'),
-  obs: require('../data/obs.json'),
+  tfArr: require('../data/binance_fx-USD_BTC_perpetual_swap-tf.json'),
+  obs: require('../data/binance_fx-USD_BTC_perpetual_swap-ob.json'),
   fundingInfo: [] as any,
   traderOptions: {
-    basePath: '@src',
+    basePath,
     // toggle this to cppStrategy or pythonStrategy
     version: 'cppStrategy',
     isBackTesting: true,

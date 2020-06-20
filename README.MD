@@ -14,7 +14,7 @@ sample in cpptrader.cc
 
 edit c++ file, and run this command to compile and run strategy.
 ```
-node-gyp rebuild && npm run tsc && node src/mainCpp.js
+node-gyp rebuild && npm run tsc && node dist/mainCpp.js
 ```
 
 ## python trader

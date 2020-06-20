@@ -100,7 +100,7 @@ Napi::Value CppTrader::ReceiveOb(const Napi::CallbackInfo& info) {
   uint32_t ts = orderbook.Get("0").ToNumber().Uint32Value();
   uint32_t pair = orderbook.Get("1").ToNumber().Uint32Value();
 
-  // printf("orderbook ts %u, pair=%u \n", ts, pair);
+  //  printf("orderbook ts %u, pair=%u \n", ts, pair);
   Array ret = Array::New(info.Env(), 0);
   return ret;
 }
