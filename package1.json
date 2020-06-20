@@ -1,0 +1,31 @@
+{
+  "name": "pytrader",
+  "version": "0.0.1",
+  "description": "Node.js Addons Example #6",
+  "main": "src/mainPython.js",
+  "private": true,
+  "gypfile": true,
+  "scripts": {
+    "postinstall": "npm run tsc",
+    "tsc": "tsc",
+    "tsc:watch": "tsc -w",
+    "build-docker": "bash ops/buildDocker.sh master",
+    "prettier": "node ./node_modules/prettier/bin-prettier.js --parser=typescript --single-quote --trailing-comma=all --write --print-width=120 'src/**/*.ts'",
+    "py": "docker run -t -i --rm -v $(pwd)/pythonSrc:/app/pythonSrc cpptrader:master node dist/mainPython.js $@",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "basic-backtest": "git+ssh://git@bitbucket.org/whateverhow/basic-backtest.git#master",
+    "bindings": "~1.2.1",
+    "bitmex-ws-orderbook": "^1.0.35",
+    "lodash": "^4.17.15",
+    "node-addon-api": "^1.0.0",
+    "prettier": "^1.19.1",
+    "sim-ex": "git+ssh://git@bitbucket.org/whateverhow/simcontractex.git#master",
+    "typescript": "^3.7.4"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^13.1.8"
+  }
+}
