@@ -99,8 +99,8 @@ const dataExchanges: any = {
     makerFee2: 0.0002,
     initialAssetMap: { BTC: 10, USD: 0 },
     baseCurrencySymbol: 'USD',
-    tradingPairDbCode: ob1[0].c,
-    tradingPairDbCode2: ob2[0].c,
+    tradingPairDbCode: tf1[0][4],
+    tradingPairDbCode2: tf2[0][4],
     strategyOptions: {
       ...constantsObj,
     },
