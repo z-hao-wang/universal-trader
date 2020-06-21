@@ -95,6 +95,8 @@ def complete(arg):
     timeSpend = endTime - traderInstance.startTime
     print("took", timeSpend)
     print("completed", argJson["options"])
+    # print your orders execution data
+    #print("fills", argJson["fills1"])
 
 def positionChange(arg):
     global traderInstance
