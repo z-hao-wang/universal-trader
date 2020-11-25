@@ -49,7 +49,7 @@ console.log(`STRATEGY_NAME`, process.argv[2]);
 
 const basePath = '../../../../dist/strategies';
 const strategy = traderUtils.loadStrategy(basePath, STRATEGY_NAME);
-const constantsObj = TraderContractUltraHfBackTest.getConstantsObj(strategy);
+const constantsObj = traderUtils.getConstantsObj(strategy);
 const tf1 = require('../data/bitmex_fx-USD_BTC_perpetual_swap-tf.json');
 const tf2 = require('../data/binance_fx-USD_BTC_perpetual_swap-tf.json');
 const ob1 = require('../data/bitmex_fx-USD_BTC_perpetual_swap-ob.json');
