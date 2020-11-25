@@ -4,7 +4,7 @@ docker:
 
 console:
 	docker rm -f pytrader || true
-	bash ops/runInteractiveconsole.sh
+	bash ops/runInteractiveConsole.sh
 
 run:
 	node --max-old-space-size=16000 dist/mainPython.js $(strategy)
