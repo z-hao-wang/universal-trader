@@ -15,12 +15,14 @@ make docker
 ### docker dev mode with live console
 ```
 make console
-
-# run either of the 2 sample strategies
+```
+### run either of the 2 sample strategies
+```
 rr pythonSample
 rr pythonSampleDualExchange
-
-# rebuild typescript file (required when typescript file is changed)
+```
+#### rebuild typescript file (required when typescript file is changed)
+```
 npm run tsc
 ```
 
