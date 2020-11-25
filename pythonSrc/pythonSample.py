@@ -15,9 +15,9 @@ class Trader:
         side = trade[1] # 0 = buy, 1 = sell
         price = trade[2]
         amount = trade[3] # in btc
-        if self.counterTrades < 10:
-            self.counterTrades = self.counterTrades + 1
+        if self.counterTrades % 1000 == 0:
             print("receiveTrade", time, price)
+        self.counterTrades += 1
         # spread will be backtested with genetic fitting
         spread = options["spread"]
         if position is None:
@@ -65,15 +65,15 @@ class Trader:
     #               pairDb: string;
     #               }
     def receiveOb(self, ob, position, orders, options):
-        if self.counterObs < 10:
-            self.counterObs = self.counterObs + 1
+        if self.counterObs % 2000 == 0:
             print(f"receiveOb", ob)
+        self.counterObs += 1
         return []
 
     def receiveCandle(self, candle, positions, orders, options):
-        if self.counterCandles < 5:
-            self.counterCandles = self.counterCandles + 1
+        if self.counterCandles % 100 == 0:
             print('receiveCandle', candle)
+        self.counterCandles += 1
         return []
 
 traderInstance = Trader("{}")

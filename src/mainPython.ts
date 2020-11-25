@@ -1,9 +1,11 @@
+require('dotenv').config();
 import { traderUtils, tfUtils, TraderContractUltraHfBackTest } from 'basic-backtest';
 import { loadTfsV2, loadObs, loadCandlesV2 } from './utils/dataLoadingUtils';
 import * as _ from 'lodash';
-// change this to switch to different type of strategies
-const STRATEGY_NAME = process.argv[2] || 'pythonSample';
-console.log(`STRATEGY_NAME`, process.argv[2]);
+import { getArgs } from './utils/args';
+
+const STRATEGY_NAME = getArgs().strategy || 'pythonSample';
+console.log(`STRATEGY_NAME`, getArgs().strategy);
 
 const startDate = '2020-06-01T00:00:00.000Z';
 const endDate = '2020-06-03T00:00:00.000Z';

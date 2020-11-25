@@ -52,5 +52,6 @@ RUN node-gyp rebuild && npm run tsc
 # RUN ls /usr/local/lib
 RUN ls -al /usr/local/lib/libpython3.7m.so.1.0
 
+COPY .env /app/.env
 COPY makefile /app/
-CMD node
+RUN echo 'node --max-old-space-size=16000 dist/mainPython.js --strategy $1' > /bin/rr && chmod +x /bin/rr

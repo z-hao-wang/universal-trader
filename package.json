@@ -14,11 +14,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "argparse": "^2.0.1",
     "basic-backtest": "git+ssh://git@bitbucket.org/whateverhow/basic-backtest.git#master",
     "bindings": "~1.2.1",
     "bitmex-request": "0.0.51",
     "bitmex-ws-orderbook": "git+ssh://git@github.com/z-hao-wang/bitmex-ws-orderbook.git",
+    "dotenv": "^8.2.0",
+    "http": "0.0.1-security",
+    "https": "^1.0.0",
     "lodash": "^4.17.15",
+    "mkdirp": "^1.0.4",
     "node-addon-api": "^1.0.0",
     "prettier": "^1.19.1",
     "request-promise": "^4.2.6",

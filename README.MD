@@ -32,8 +32,8 @@ make docker
 make console
 
 # run either of the 2 sample strategies
-make run strategy=pythonSample
-make run strategy=pythonSampleDualExchange
+rr pythonSample
+rr pythonSampleDualExchange
 
 # rebuild typescript file (required when typescript file is changed)
 npm run tsc
