@@ -1,33 +1,18 @@
-## getting started
-```
-# install git lfs
-bash ops/unzipData.sh
-```
+# getting started
+
 Note: you will need special access to basic-backtest repo.
 
-## c++ trader
-this repo is for integrating with trading framework.
-
-ReceiveTrade, ReceiveOb are 2 functions to receive live stream data, any decisioning logic can be done there, output trading instructions.
-
-sample in cpptrader.cc
-
-edit c++ file, and run this command to compile and run strategy.
-```
-node-gyp rebuild && npm run tsc && node dist/mainCpp.js
-```
-
-## python trader
-similar concept with c++ trader, can write core strategy in python. python file in pythonSrc/
+# python trader
+Can write core strategy in python. python file in pythonSrc/
 the easiest way is to run in docker.
 These commands works in mac, and probably work in linux. 
 
-first build it.
+first build docker image
 ```
 make docker
 ```
 
-# docker dev mode with live console
+### docker dev mode with live console
 ```
 make console
 
@@ -39,9 +24,21 @@ rr pythonSampleDualExchange
 npm run tsc
 ```
 
-
-# to exit
+# to exit docker console
 ```
 exit
 ```
 
+
+
+# c++ trader
+this repo is for integrating with trading framework.
+
+ReceiveTrade, ReceiveOb are 2 functions to receive live stream data, any decisioning logic can be done there, output trading instructions.
+
+sample in cpptrader.cc
+
+edit c++ file, and run this command to compile and run strategy.
+```
+node-gyp rebuild && npm run tsc && node dist/mainCpp.js
+```
