@@ -21,7 +21,7 @@ make console
 rr pythonSample
 rr pythonSampleDualExchange
 ```
-#### rebuild typescript file (required when typescript file is changed)
+### rebuild typescript file (required when typescript file is changed)
 ```
 npm run tsc
 ```
