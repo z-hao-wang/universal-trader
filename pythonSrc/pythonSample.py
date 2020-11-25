@@ -6,12 +6,18 @@ class Trader:
         argJson = json.loads(initialValue)
         self.startTime = datetime.timestamp(datetime.now())
         # save initial values
+        self.counterTrades = 0
+        self.counterObs = 0
+        self.counterCandles = 0
 
     def receiveTrade(self, trade, position, orders, options):
         time = trade[0]
         side = trade[1] # 0 = buy, 1 = sell
         price = trade[2]
         amount = trade[3] # in btc
+        if self.counterTrades < 10:
+            self.counterTrades = self.counterTrades + 1
+            print("receiveTrade", time, price)
         # spread will be backtested with genetic fitting
         spread = options["spread"]
         if position is None:
@@ -59,9 +65,15 @@ class Trader:
     #               pairDb: string;
     #               }
     def receiveOb(self, ob, position, orders, options):
+        if self.counterObs < 10:
+            self.counterObs = self.counterObs + 1
+            print(f"receiveOb", ob)
         return []
+
     def receiveCandle(self, candle, positions, orders, options):
-        # print('candle', candle)
+        if self.counterCandles < 5:
+            self.counterCandles = self.counterCandles + 1
+            print('receiveCandle', candle)
         return []
 
 traderInstance = Trader("{}")

@@ -22,25 +22,32 @@ function pickOptions(options: TraderUltraTfClass) {
 const pythonWrapper: StrategyType = {
   constants: [
     {
-      key: 'placeOrderGap',
-      value: 5000,
-    },
-    {
-      key: 'enableSe2',
+      key: 'enableSe2', // enable second exchange, should be false for single exchange strategy
       value: false,
     },
     {
-      key: 'spread',
-      value: 1,
+      // if you don't need orderbook, remove this value
+      key: 'realtimeObLevels', // configure how many levels do you want for realtime orderbook
+      value: 0,
     },
     {
+      // only useful when realtimeObLevels is set
+      key: 'minObGapMs', // configure how frequently you like to receive orderbook updates.
+      value: 1000,
+    },
+    {
+      // configure candles
       key: 'requireCandle',
       value: {
         resolution: 300,
-        preloadSeconds: 86400 * 20,
+        preloadSeconds: 86400 * 10, // first time preload candle seconds. useful to build historical data
         pairDb: 'USD_BTC_perpetual_swap',
         exchange: 'bitmex_fx',
       },
+    },
+    {
+      key: 'spread', // an example parameter for strategy to use down stream
+      value: 1.5,
     },
   ],
   params: [

@@ -24,43 +24,24 @@ These commands works in mac, and probably work in linux.
 
 first build it.
 ```
-bash ops/buildDocker.sh
+make docker
 ```
-
-Then make any changes in pythonSrc/ and run it again
-
-```
-bash ops/runpy.sh pythonSample
-bash ops/runpy.sh pythonSampleDualExchange
-```
-
-To Kill the docker instance, open separate browser tab and run
-```
-docker rm -f pytrader
-```
-
-if you modify ts file, you need to rebuild the docker image.
-
-
-
-# DEV only notes, don't try this unless you know what you are doing
-## test on linux server
-node dist/mainPython.js pythonSampleDualExchange
-
-## setup in macos
-For some reason, the linking didn't work well in linux or macos
-`"<!(python3-config --ldflags)",` this link flag works fine in docker env,
-but appears to not working in ubuntu 18 or mac
-
-node-gyp rebuild --python $(which python3) && node dist/mainPython.js pythonSampleDualExchange
-
-debug 
-node-gyp configure
 
 # docker dev mode with live console
 ```
-docker run -t -i --name pytrader --rm -v $(pwd)/pythonSrc:/app/pythonSrc -v $(pwd)/data:/app/data -v $(pwd)/src:/app/src cpptrader:master bash
+make console
 
-npm run tsc && node dist/mainPython.js pythonSampleDualExchange
+# run either of the 2 sample strategies
+make run strategy=pythonSample
+make run strategy=pythonSampleDualExchange
+
+# rebuild typescript file (required when typescript file is changed)
+npm run tsc
+```
+
+
+# to exit
+```
+exit
 ```
 

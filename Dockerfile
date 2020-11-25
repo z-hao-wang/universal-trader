@@ -51,4 +51,6 @@ COPY src /app/src
 RUN node-gyp rebuild && npm run tsc
 # RUN ls /usr/local/lib
 RUN ls -al /usr/local/lib/libpython3.7m.so.1.0
+
+COPY makefile /app/
 CMD node

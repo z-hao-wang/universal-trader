@@ -66,3 +66,4 @@ pythonSrc/__pycache__
 dist/
 docker-ssh
 data/*.json
+market-data

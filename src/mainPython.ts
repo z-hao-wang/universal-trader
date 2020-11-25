@@ -1,110 +1,99 @@
-import { evaluateProfit, traderUtils, TraderContractUltraHfBackTest, dataUtils } from 'basic-backtest';
+import { traderUtils, tfUtils, TraderContractUltraHfBackTest } from 'basic-backtest';
+import { loadTfsV2, loadObs, loadCandlesV2 } from './utils/dataLoadingUtils';
 import * as _ from 'lodash';
-/*
-export interface Position {
-    amountClosed?: number;
-    amountCurrency: number; // amount remaining
-    side: number;
-    price: number;
-    pairDb: number;
-  }
-
-Trade Schema:
- ts: number; // timestamp
- s: number;
- r: number;
- a: number;
- c: number; // pairDb
-
-
- */
-// const obj = new addon.CppTrader(0);
-// const position = {
-//     amountCurrency: 100,
-//     side: 0,
-//     price: 9000,
-//     pair: 0,
-// }
-// const activeOrders = [{
-//     side: 0,
-//     price: 9001,
-//     amountCurrency: 100,
-// }, {
-//     side: 1,
-//     price: 9003,
-//     amountCurrency: 100,
-// }];
-// //  [ ts, side, price, amount, pair ]
-// const trade = [1579470323360, 0, 9001.5, 0.12, 0];
-//
-// console.log( obj.receiveTrade(trade, position, activeOrders) ); // 15
-//
-// // [ts, pair, bid1.price, bid1.amount, ask1.price, ask1.amount, bid2.price, ...]
-// const ob = [1579470323360, 0, 9001, 0.12, 9001.5, 0.4];
-//
-// console.log( obj.receiveOb(ob) ); // 15
 // change this to switch to different type of strategies
 const STRATEGY_NAME = process.argv[2] || 'pythonSample';
 console.log(`STRATEGY_NAME`, process.argv[2]);
 
-const basePath = '../../../../dist/strategies';
-const strategy = traderUtils.loadStrategy(basePath, STRATEGY_NAME);
-const constantsObj = traderUtils.getConstantsObj(strategy);
-const tf1 = require('../data/bitmex_fx-USD_BTC_perpetual_swap-tf.json');
-const tf2 = require('../data/binance_fx-USD_BTC_perpetual_swap-tf.json');
-const ob1 = require('../data/bitmex_fx-USD_BTC_perpetual_swap-ob.json');
-const ob2 = require('../data/binance_fx-USD_BTC_perpetual_swap-ob.json');
-const funding1 = require('../data/bitmex_fx-USD_BTC_perpetual_swap-funding.json');
-const funding2 = require('../data/binance_fx-USD_BTC_perpetual_swap-funding.json');
-const candle1 = require('../data/bitmex_fx-USD_BTC_perpetual_swap-candle.json');
-const candle2 = require('../data/binance_fx-USD_BTC_perpetual_swap-candle.json');
+const startDate = '2020-06-01T00:00:00.000Z';
+const endDate = '2020-06-03T00:00:00.000Z';
+const tradesExchanges = ['bitmex_fx'];
+const tradesPairDbs = ['USD_BTC_perpetual_swap'];
 
-const dualExchange = STRATEGY_NAME === 'pythonSampleDualExchange';
-const hours = 2;
-const tfArr = (() => {
-  let arr = dualExchange ? dataUtils.mergeTfV2(tf1, tf2) : tf1;
-  if (hours > 0) {
-    arr = _.filter(arr, a => a[0] <= arr[0][0] + hours * 3600 * 1000);
-  }
-  return arr;
-})();
-const obs = (() => {
-  let obsTmp = dualExchange ? dataUtils.mergeTimeSeries(ob1, ob2) : ob1;
-  if (hours > 0) {
-    obsTmp = _.filter(obsTmp, a => a.ts <= obsTmp[0].ts + hours * 3600 * 1000);
-  }
-  return obsTmp;
-})();
-console.log(`tfflen=${tfArr.length} tf1Len=${tf1.length} obsLen=${obs.length}`);
+async function main() {
+  const basePath = '../../../../dist/strategies';
+  const strategy = traderUtils.loadStrategy(basePath, STRATEGY_NAME);
+  const constantsObj = traderUtils.getConstantsObj(strategy);
+  const tfs = await loadTfsV2(
+    new Date(startDate),
+    new Date(endDate),
+    tradesExchanges,
+    tradesPairDbs,
+    constantsObj.enableRawTrades,
+  );
 
-const dataExchanges: any = {
-  tfArr,
-  obs,
-  candles: candle1,
-  fundingInfo: funding1,
-  fundingInfo2: funding2,
-  traderOptions: {
-    basePath,
-    // toggle this to cppStrategy or pythonStrategy
-    version: STRATEGY_NAME,
-    isBackTesting: true,
-    startingPrinciple: 10,
-    isFittingOnly: false,
-    pairDb: 'USD_BTC_perpetual_swap',
-    exchange: 'bitmex_fx',
-    leverage: 5,
-    takerFee: 0.00075,
-    makerFee: -0.00025,
-    takerFee2: 0.0004,
-    makerFee2: 0.0002,
-    initialAssetMap: { BTC: 10, USD: 0 },
-    baseCurrencySymbol: 'USD',
-    tradingPairDbCode: tf1[0][4],
-    tradingPairDbCode2: tf2[0][4],
-    strategyOptions: {
-      ...constantsObj,
+  let candles: any = [];
+  if (constantsObj.requireCandle) {
+    candles = await loadCandlesV2(
+      new Date(new Date(startDate).getTime() - constantsObj.requireCandle.preloadSeconds * 1000),
+      new Date(endDate),
+      tradesExchanges,
+      tradesPairDbs,
+    );
+  }
+
+  console.log(`trades len=${tfs.length}`);
+
+  const dataExchanges: any = {
+    tfArr: tfs,
+    candles,
+    fundingInfo: [],
+    fundingInfo2: [],
+    traderOptions: {
+      basePath,
+      // toggle this to cppStrategy or pythonStrategy
+      version: STRATEGY_NAME,
+      isBackTesting: true,
+      startingPrinciple: 10,
+      isFittingOnly: false,
+      pairDb: tradesPairDbs[0],
+      exchange: tradesExchanges[0],
+      leverage: 5,
+      takerFee: 0.00075,
+      makerFee: -0.00025,
+      takerFee2: 0.0004,
+      makerFee2: 0.0002,
+      initialAssetMap: { BTC: 10, USD: 0 },
+      baseCurrencySymbol: 'BTC',
+      tradingPairDbCode: tfUtils.pairDbToNumber(tradesPairDbs[0], tradesExchanges[0]),
+      tradingPairDbCode2: tfUtils.pairDbToNumber(_.last(tradesPairDbs)!, _.last(tradesExchanges)!),
+      strategyOptions: {
+        ...constantsObj,
+      },
     },
-  },
-};
-const { trader, fitnessMetric } = evaluateProfit(dataExchanges);
-console.log(`fitnessMetric`, fitnessMetric);
+  };
+  const trader = new TraderContractUltraHfBackTest(dataExchanges.traderOptions as any);
+  trader.setCandles(candles);
+
+  let tfArrIndex = 0;
+  if (constantsObj.realtimeObLevels) {
+    let currentDateTs = new Date(startDate).getTime();
+    const endDateTs = new Date(endDate).getTime();
+    while (currentDateTs < endDateTs) {
+      currentDateTs += 86400000;
+      const obs = await loadObs({
+        constantObj: constantsObj,
+        obExchanges: tradesExchanges,
+        obPairDbs: tradesPairDbs,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+      });
+      for (const ob of obs) {
+        while (tfArrIndex < tfs.length && tfs[tfArrIndex][0] < ob.ts) {
+          trader.onReceiveTf(tfs[tfArrIndex]);
+          tfArrIndex++;
+        }
+        trader.onReceiveOb(ob);
+      }
+    }
+  } else {
+    while (tfArrIndex < tfs.length) {
+      trader.onReceiveTf(tfs[tfArrIndex]);
+      tfArrIndex++;
+    }
+  }
+
+  trader.onComplete();
+  console.log({ balance: trader.getValuation(), fitnessMetric: trader.getFitnessMetric() });
+}
+main();
