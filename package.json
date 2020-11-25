@@ -18,7 +18,7 @@
     "basic-backtest": "git+ssh://git@bitbucket.org/whateverhow/basic-backtest.git#master",
     "bindings": "~1.2.1",
     "bitmex-request": "0.0.51",
-    "bitmex-ws-orderbook": "git+ssh://git@github.com/z-hao-wang/bitmex-ws-orderbook.git",
+    "bitmex-ws-orderbook": "git+https://github.com/z-hao-wang/bitmex-ws-orderbook.git#master",
     "dotenv": "^8.2.0",
     "http": "0.0.1-security",
     "https": "^1.0.0",
